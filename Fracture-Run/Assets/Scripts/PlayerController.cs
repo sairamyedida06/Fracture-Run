@@ -4,7 +4,7 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody rb;
+   
     public float moveSpeed;
     bool movingLeft = true;
     bool firstTouch = true;
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        rb.linearVelocity = new Vector3(transform.forward.x * moveSpeed,rb.linearVelocity.y, transform.forward.z * moveSpeed);
+       transform.position += transform.forward * moveSpeed *Time.deltaTime ;
         
     }
 
@@ -66,14 +66,14 @@ public class PlayerController : MonoBehaviour
         if (movingLeft)
         {
             movingLeft = false;
-           rb.transform.rotation = Quaternion.Euler(0, 90, 0);
+          transform.rotation = Quaternion.Euler(0, 90, 0);
         }
 
         else
 
         {
             movingLeft = true;
-            rb.transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 

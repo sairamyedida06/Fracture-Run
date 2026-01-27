@@ -34,7 +34,7 @@ public class PlatformSpawner : MonoBehaviour
             Instantiate(platform, newPosition, Quaternion.identity);
 
             lastposition = newPosition;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
