@@ -19,23 +19,16 @@ public class PlayerController : MonoBehaviour
     {
         if (Gamemanager.instance.gameStarted)
         {
-            
-        }
-            
-       
-    }
-
-    private void FixedUpdate()
-    {
-
-        if (Gamemanager.instance.gameStarted)
-        {
             CheckInput();
             Move();
             Death();
         }
-        
-        
+        if(transform.position.y < -2f)
+        {
+            Gamemanager.instance.GameOver();
+        }
+            
+       
     }
 
     void Move()
@@ -79,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     private void Death()
     {
-        if (rb.transform.position.y < -2f)
+        if (transform.position.y < -2f)
         {
             
         }
