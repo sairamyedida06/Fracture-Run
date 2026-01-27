@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -43,6 +44,7 @@ public class Gamemanager : MonoBehaviour
     {
         gameStarted = true;
         platformSpawner.SetActive(true);
+        StartCoroutine(UpdateScore());
 
 
 
@@ -59,5 +61,17 @@ public class Gamemanager : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-    
+    IEnumerator UpdateScore()
+    {
+        while (true)
+        {
+
+             yield return new WaitForSeconds(1f);
+            score++;
+            scoreText.text = score.ToString();
+        }
+        
+
+    }
+
 }
