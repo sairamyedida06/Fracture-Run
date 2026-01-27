@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,9 @@ public class Gamemanager : MonoBehaviour
     public bool gameStarted;
 
     public GameObject platformSpawner;
+
+    public TextMeshProUGUI scoreText;
+    int score = 0;
     private void Awake()
     {
         if (instance == null)
@@ -46,10 +50,14 @@ public class Gamemanager : MonoBehaviour
      public void GameOver()
     {
         platformSpawner.SetActive(false);
-        
+        Invoke("Reload", 2f);
 
     }
 
+    void Reload()
+    {
+        SceneManager.LoadScene("Game");
+    }
+
     
-   
 }
