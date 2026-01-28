@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sf: {fileID: 7149416726561376233}
   sfx: {fileID: 8300000, guid: 937b96255cec766419cbd64b8e356ce5, type: 3}
+  vfx: {fileID: 2902018377863523425, guid: 91bc89c389c0834469f95b4e6d26bcae, type: 3}
 --- !u!82 &7149416726561376233
 AudioSource:
   m_ObjectHideFlags: 0

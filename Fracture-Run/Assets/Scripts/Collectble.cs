@@ -4,6 +4,7 @@ public class Collectble : MonoBehaviour
 {
     public AudioSource sf;
     public AudioClip sfx;
+    public GameObject vfx;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,6 +24,7 @@ public class Collectble : MonoBehaviour
         {
             
             Gamemanager.instance.score +=10 ;
+            Instantiate(vfx,transform.position,vfx.transform.rotation) ;
             AudioSource.PlayClipAtPoint(sfx, transform.position);
 
 
