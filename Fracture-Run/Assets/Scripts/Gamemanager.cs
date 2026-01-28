@@ -3,16 +3,23 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Gamemanager : MonoBehaviour
 {
     public static Gamemanager instance;
     public bool gameStarted;
 
-    public GameObject platformSpawner;
+    public GameObject platformSpawner;  
+    public GameObject scoreUi;
+    public GameObject MenuUI;
 
-    public TextMeshProUGUI scoreText;
+    public Text scoreText;
+    public Text highScoreText;
+
+
     int score = 0;
+    int highScore ;
     private void Awake()
     {
         if (instance == null)
@@ -24,7 +31,8 @@ public class Gamemanager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        highScore = PlayerPrefs.GetInt("HighScore");
+        highScoreText.text = "Best Score : " + highScore;
     }
 
     // Update is called once per frame
@@ -43,7 +51,13 @@ public class Gamemanager : MonoBehaviour
     public void GameStart()
     {
         gameStarted = true;
+
         platformSpawner.SetActive(true);
+
+        scoreUi.SetActive(true);
+        MenuUI.SetActive(false);
+
+
         StartCoroutine(UpdateScore());
 
 
@@ -52,6 +66,8 @@ public class Gamemanager : MonoBehaviour
      public void GameOver()
     {
         platformSpawner.SetActive(false);
+        SaveHighScore();
+        StopAllCoroutines();
         Invoke("Reload", 2f);
 
     }
@@ -59,6 +75,7 @@ public class Gamemanager : MonoBehaviour
     void Reload()
     {
         SceneManager.LoadScene("Game");
+        
     }
 
     IEnumerator UpdateScore()
@@ -66,7 +83,7 @@ public class Gamemanager : MonoBehaviour
         while (true)
         {
 
-             yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
             score++;
             scoreText.text = score.ToString();
         }
@@ -74,4 +91,14 @@ public class Gamemanager : MonoBehaviour
 
     }
 
+    void SaveHighScore()
+    {
+        int savedHighScore = PlayerPrefs.GetInt("HighScore", 0);
+
+        if (score > savedHighScore)
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+            PlayerPrefs.Save();
+        }
+    }
 }
