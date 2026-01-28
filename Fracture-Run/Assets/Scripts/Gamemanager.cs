@@ -18,7 +18,7 @@ public class Gamemanager : MonoBehaviour
     public Text highScoreText;
 
 
-    int score = 0;
+    public int score = 0;
     int highScore ;
     private void Awake()
     {

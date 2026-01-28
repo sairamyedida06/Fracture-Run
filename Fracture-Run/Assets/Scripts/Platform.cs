@@ -2,10 +2,20 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+
+    public GameObject collectble;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        int randomNumber = Random.Range(0, 5);
+        Vector3 collectblePosition = transform.position;
+        collectblePosition.y += .5f;
+
+        if (randomNumber < 1)
+        {
+            GameObject collectbleInstance = Instantiate(collectble,collectblePosition,Quaternion.identity);
+            collectbleInstance.transform.SetParent(gameObject.transform);
+        }
     }
 
     // Update is called once per frame
