@@ -23,7 +23,7 @@ public class Collectble : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             
-            Gamemanager.instance.score +=5 ;
+            Gamemanager.instance.score += 5;
             Instantiate(vfx,transform.position,vfx.transform.rotation) ;
             AudioSource.PlayClipAtPoint(sfx, transform.position);
 
