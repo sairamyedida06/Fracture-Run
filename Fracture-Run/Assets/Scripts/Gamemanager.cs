@@ -12,10 +12,11 @@ public class Gamemanager : MonoBehaviour
 
     public GameObject platformSpawner;  
     public GameObject scoreUi;
-    public GameObject MenuUI;
+    public GameObject RetryMenu;
+    
 
     public Text scoreText;
-    public Text highScoreText;
+   
 
 
     public int score = 0;
@@ -31,20 +32,13 @@ public class Gamemanager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SetHighScore();
+        
+        GameStart();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!gameStarted)
-            {
-                GameStart();
-            }
-
-        }     
     }
 
     public void GameStart()
@@ -54,7 +48,7 @@ public class Gamemanager : MonoBehaviour
         platformSpawner.SetActive(true);
 
         scoreUi.SetActive(true);
-        MenuUI.SetActive(false);
+       
 
 
         StartCoroutine(UpdateScore());
@@ -64,13 +58,18 @@ public class Gamemanager : MonoBehaviour
         platformSpawner.SetActive(false);
         SaveHighScore();
         StopAllCoroutines();
-        Invoke("Reload", 2f);
+        Invoke("Reload", 1f);
 
     }
 
-    void Reload()
+    public void Reload()
     {
-        SceneManager.LoadScene("Game");   
+        RetryMenu.SetActive(true);  
+    }
+
+    public void Restrat()
+    {
+        SceneManager.LoadScene("Game");
     }
 
     IEnumerator UpdateScore()
@@ -97,9 +96,7 @@ public class Gamemanager : MonoBehaviour
         }
     }
 
-    void SetHighScore()
-    {
-        highScore = PlayerPrefs.GetInt("HighScore");
-        highScoreText.text = "Best Score : " + highScore;
-    }
+    
+
+     
 }

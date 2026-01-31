@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
    
     public float moveSpeed;
     bool movingLeft = true;
-    bool firstTouch = true;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,11 +39,6 @@ public class PlayerController : MonoBehaviour
 
     void CheckInput()
     {
-        if (firstTouch)
-        {
-            firstTouch = false;
-            return;
-        }
         
 
         if (Input.GetMouseButtonDown(0))
@@ -62,7 +57,7 @@ public class PlayerController : MonoBehaviour
           transform.rotation = Quaternion.Euler(0, 90, 0);
         }
 
-        else
+        else if(!movingLeft)
 
         {
             movingLeft = true;
