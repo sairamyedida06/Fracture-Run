@@ -5,7 +5,7 @@ using UnityEngine;
 public class BackgroundColourChange : MonoBehaviour
 {
     
-    public Material[] skyboxes;
+    [SerializeField] private Material[] skyboxes;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,7 +28,7 @@ public class BackgroundColourChange : MonoBehaviour
             RenderSettings.skybox = skyboxes[random];
             DynamicGI.UpdateEnvironment(); 
 
-            yield return new WaitForSeconds(8f);
+            yield return new WaitForSeconds(10f);
         }
     }
 

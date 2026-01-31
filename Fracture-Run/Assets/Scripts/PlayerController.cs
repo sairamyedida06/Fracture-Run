@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
         {
             CheckInput();
             Move();
-            Death();
+        
         }
         if(transform.position.y < -2f)
         {
@@ -70,13 +70,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Death()
-    {
-        if (transform.position.y < -2f)
-        {
-            
-        }
-    }
 }
 
 

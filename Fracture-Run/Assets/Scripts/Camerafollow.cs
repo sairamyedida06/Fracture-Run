@@ -17,10 +17,7 @@ public class Camerafollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (target.position.y >= 0.097)
-        {
-            Follow();
-        }
+        UpdateFollow();
     }
 
     void Follow()
@@ -29,7 +26,14 @@ public class Camerafollow : MonoBehaviour
         Vector3  targetpos = target.position - distance;
 
         transform.position = Vector3.Lerp(currentPos, targetpos, followSeed * Time.deltaTime);
-        
 
+    }
+
+    void UpdateFollow()
+    {
+        if (target.position.y >= 0.01)
+        {
+            Follow();
+        }
     }
 }

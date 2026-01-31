@@ -7,15 +7,7 @@ public class Platform : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        int randomNumber = Random.Range(0, 5);
-        Vector3 collectblePosition = transform.position;
-        collectblePosition.y += .5f;
-
-        if (randomNumber < 1)
-        {
-            GameObject collectbleInstance = Instantiate(collectble,collectblePosition,Quaternion.identity);
-            collectbleInstance.transform.SetParent(gameObject.transform);
-        }
+        SpawnCollectble();
     }
 
     // Update is called once per frame
@@ -32,12 +24,23 @@ public class Platform : MonoBehaviour
         }
         
     }
-
     void Fall()
     {
         GetComponent<Rigidbody>().isKinematic = false;
         Destroy(gameObject, 1f);
     }
 
+    void SpawnCollectble()
+    {
+        int randomNumber = Random.Range(0, 15);
+        Vector3 collectblePosition = transform.position;
+        collectblePosition.y += .5f;
+
+        if (randomNumber < 1)
+        {
+            GameObject collectbleInstance = Instantiate(collectble,collectblePosition,Quaternion.identity);
+            collectbleInstance.transform.SetParent(gameObject.transform);
+        }
+    }
     
 }

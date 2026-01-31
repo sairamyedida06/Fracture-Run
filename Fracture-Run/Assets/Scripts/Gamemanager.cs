@@ -31,8 +31,7 @@ public class Gamemanager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        highScore = PlayerPrefs.GetInt("HighScore");
-        highScoreText.text = "Best Score : " + highScore;
+        SetHighScore();
     }
 
     // Update is called once per frame
@@ -59,9 +58,6 @@ public class Gamemanager : MonoBehaviour
 
 
         StartCoroutine(UpdateScore());
-
-
-
     }
      public void GameOver()
     {
@@ -74,8 +70,7 @@ public class Gamemanager : MonoBehaviour
 
     void Reload()
     {
-        SceneManager.LoadScene("Game");
-        
+        SceneManager.LoadScene("Game");   
     }
 
     IEnumerator UpdateScore()
@@ -100,5 +95,11 @@ public class Gamemanager : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", score);
             PlayerPrefs.Save();
         }
+    }
+
+    void SetHighScore()
+    {
+        highScore = PlayerPrefs.GetInt("HighScore");
+        highScoreText.text = "Best Score : " + highScore;
     }
 }
