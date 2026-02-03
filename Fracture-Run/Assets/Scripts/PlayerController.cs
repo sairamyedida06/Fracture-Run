@@ -4,14 +4,24 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-   
-    public float moveSpeed;
+    public static PlayerController Instance;
+
+
+    [Header("Movement")]
+    public float baseMoveSpeed = 4f;
+    [HideInInspector] public float currentMoveSpeed;
+
     bool movingLeft = true;
-    
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        currentMoveSpeed = baseMoveSpeed;
+
     }
 
     // Update is called once per frame
@@ -33,7 +43,8 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-       transform.position += transform.forward * moveSpeed *Time.deltaTime ;
+       transform.position += transform.forward * currentMoveSpeed * Time.deltaTime ;
+        Debug.Log(currentMoveSpeed);
         
     }
 

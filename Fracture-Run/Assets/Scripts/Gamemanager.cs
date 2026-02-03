@@ -16,7 +16,13 @@ public class Gamemanager : MonoBehaviour
     
 
     public Text scoreText;
-   
+
+    [Header("Speed Scaling")]
+    public int scoreStep = 50;
+    public float speedIncreaseAmount = 0.3f;
+    public float maxSpeed = 10f;
+
+    private int nextSpeedScore;
 
 
     public int score = 0;
@@ -34,6 +40,8 @@ public class Gamemanager : MonoBehaviour
     {
         
         GameStart();
+        nextSpeedScore = scoreStep;
+
     }
 
     // Update is called once per frame
@@ -79,6 +87,7 @@ public class Gamemanager : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
             score++;
+            CheckSpeedIncrease();
             scoreText.text = score.ToString();
         }
         
@@ -95,8 +104,13 @@ public class Gamemanager : MonoBehaviour
             PlayerPrefs.Save();
         }
     }
-
-    
-
-     
+    void CheckSpeedIncrease()
+    {
+        if (score >= nextSpeedScore)
+        {
+            PlayerController.Instance.currentMoveSpeed += speedIncreaseAmount;
+            PlayerController.Instance.currentMoveSpeed = Mathf.Min(PlayerController.Instance.currentMoveSpeed, maxSpeed);
+            nextSpeedScore += scoreStep;
+        }
+    }
 }
