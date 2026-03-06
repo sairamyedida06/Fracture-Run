@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public float baseMoveSpeed = 4f;
     [HideInInspector] public float currentMoveSpeed;
 
-    bool movingLeft = true;
+    bool tapTouch = true;
 
     private void Awake()
     {
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
        transform.position += transform.forward * currentMoveSpeed * Time.deltaTime ;
-        Debug.Log(currentMoveSpeed);
+       
         
     }
 
@@ -62,16 +62,16 @@ public class PlayerController : MonoBehaviour
 
     void ChangeDirection()
     {
-        if (movingLeft)
+        if (tapTouch)
         {
-            movingLeft = false;
-          transform.rotation = Quaternion.Euler(0, 90, 0);
+            tapTouch = false;
+            transform.rotation = Quaternion.Euler(0, 90, 0);
         }
 
-        else if(!movingLeft)
+        else if(!tapTouch)
 
         {
-            movingLeft = true;
+            tapTouch = true;
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }

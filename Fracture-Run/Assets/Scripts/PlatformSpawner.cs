@@ -1,55 +1,79 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlatformSpawner : MonoBehaviour
 {
-    public GameObject platform;
-    
+    private PlatformPool pool;
 
-    public Transform lastPlatform;
-    Vector3 lastposition;
-    Vector3 newPosition;
-    bool stop;
+    public Transform startPlatform;
+    public float spawnInterval = 0.3f;
+    public int maxActivePlatforms = 15;
 
+    private Vector3 lastSpawnPosition;
+    private Vector3 nextSpawnPosition;
+    private bool stop = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+  
     void Start()
     {
-        lastposition = lastPlatform.position;
-        StartCoroutine(SpawnPlatform());
-    }
+       
+        pool = GetComponent<PlatformPool>();
 
-    // Update is called once per frame
-    void Update()
-    {
         
+        if (pool == null)
+        {
+            return;
+        }
+
+        if (startPlatform == null)
+        {
+            return;
+        }
+
+        lastSpawnPosition = startPlatform.position;
+        StartCoroutine(SpawnLoop());
     }
 
-    IEnumerator SpawnPlatform()
+    
+    IEnumerator SpawnLoop()
     {
         while (!stop)
         {
-            Position();
+            if (pool.GetActiveCount() < maxActivePlatforms)
+            {
+                GameObject freePlatform = pool.GetPlatform();
 
-            Instantiate(platform, newPosition, Quaternion.identity);
+                while (freePlatform == null)
+                {
+                    yield return null;
+                    freePlatform = pool.GetPlatform();
+                }
 
-            lastposition = newPosition;
-            yield return new WaitForSeconds(0.1f);
+                CalculateNextPosition();
+
+                freePlatform.transform.position = nextSpawnPosition;
+                freePlatform.transform.rotation = Quaternion.identity;
+                freePlatform.SetActive(true);
+
+                lastSpawnPosition = nextSpawnPosition;
+            }
+
+            yield return new WaitForSeconds(spawnInterval);
         }
     }
 
-    void Position()
+    
+    void CalculateNextPosition()
     {
-        newPosition = lastposition;
-        int random = Random.Range(0, 2);
+        nextSpawnPosition = lastSpawnPosition;
 
-        if(random > 0)
-        {
-            newPosition.x += 1;
-        }
+        int randomDirection = Random.Range(0, 20);
+
+        if (randomDirection > 12)
+
+            nextSpawnPosition.x += 1;
+
         else
-        {
-            newPosition.z += 1;
-        }
+            nextSpawnPosition.z += 1;
     }
 }

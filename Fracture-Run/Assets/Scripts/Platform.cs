@@ -1,46 +1,79 @@
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Platform : MonoBehaviour
 {
+    private string playerTag = "Player";
 
-    public GameObject collectble;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public float fallDelay = 0.1f;
+    public float fallDistanceBeforeHide = 5f;
+
+    private Rigidbody rb;
+    private Vector3 startPosition;
+    private bool isFalling = false;
+
+    private PlatformPool pool;
+
+    void Awake()
     {
-        SpawnCollectble();
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.isKinematic = true;
     }
 
-    // Update is called once per frame
+    void OnEnable()
+    {
+        
+        if (pool == null)
+        {
+            pool = FindAnyObjectByType<PlatformPool>();
+
+            if (pool == null)
+            {
+                Debug.LogError("[Platform] Could not find PlatformPool in the scene!");
+                return;
+            }
+        }
+
+        
+        isFalling = false;
+        rb.useGravity = false;
+        rb.isKinematic = true;
+        startPosition = transform.position;
+    }
+
+    
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(playerTag) && !isFalling)
+        {
+            Invoke("StartFalling", fallDelay);
+        }
+    }
+
+    
+    void StartFalling()
+    {
+        isFalling = true;
+        rb.isKinematic = false;
+        rb.useGravity = true;
+    }
+
+  
     void Update()
     {
-        
-    }
+        if (!isFalling) return;
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if(collision.gameObject.tag == "Player")
+       
+        if (pool == null) return;
+
+        float distanceFallen = startPosition.y - transform.position.y;
+
+        if (distanceFallen >= fallDistanceBeforeHide)
         {
-            Invoke("Fall",0.2f);
-        }
-        
-    }
-    void Fall()
-    {
-        GetComponent<Rigidbody>().isKinematic = false;
-        Destroy(gameObject, 1f);
-    }
-
-    void SpawnCollectble()
-    {
-        int randomNumber = Random.Range(0, 15);
-        Vector3 collectblePosition = transform.position;
-        collectblePosition.y += .5f;
-
-        if (randomNumber < 1)
-        {
-            GameObject collectbleInstance = Instantiate(collectble,collectblePosition,Quaternion.identity);
-            collectbleInstance.transform.SetParent(gameObject.transform);
+            CancelInvoke();
+            pool.ReturnPlatform(gameObject);
+            gameObject.SetActive(false);
         }
     }
-    
 }

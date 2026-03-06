@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -18,9 +17,9 @@ public class Gamemanager : MonoBehaviour
     public Text scoreText;
 
     [Header("Speed Scaling")]
-    public int scoreStep = 50;
-    public float speedIncreaseAmount = 0.3f;
-    public float maxSpeed = 10f;
+    public int scoreStep = 10;
+    public float speedIncreaseAmount = 0.5f;
+    public float maxSpeed = 5.5f;
 
     private int nextSpeedScore;
 
@@ -44,10 +43,6 @@ public class Gamemanager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     public void GameStart()
     {
@@ -61,6 +56,7 @@ public class Gamemanager : MonoBehaviour
 
         StartCoroutine(UpdateScore());
     }
+
      public void GameOver()
     {
         platformSpawner.SetActive(false);
@@ -93,7 +89,11 @@ public class Gamemanager : MonoBehaviour
         
 
     }
+    public void MainMenu() 
+    {
+        SceneManager.LoadScene("Menu");
 
+    }
     void SaveHighScore()
     {
         int savedHighScore = PlayerPrefs.GetInt("HighScore", 0);
